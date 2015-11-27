@@ -9,6 +9,8 @@ import org.apache.cordova.engine.SystemWebViewClient;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -41,16 +43,45 @@ public class LocalFileWebViewClient extends SystemWebViewClient {
         if(url != null && isLocal) {
             String assetPath = url.substring(url.indexOf(LocalFilePlugin.SCHEME_TAG) +
                     LocalFilePlugin.SCHEME_TAG.length(), url.length());
-            try {
-                plugin.log("base : " + assetPath);
-                response = new WebResourceResponse(
-                        "application/javascript",
-                        "UTF8",
-                        view.getContext().getAssets().open("www/" + assetPath)
-                );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            response = getLoadResponse(view, assetPath);
+        }
+        return response;
+    }
+
+    private String getPathOfSuffix(String path) {
+        Pattern p = Pattern.compile("^[^\\?]*\\.([a-zA-Z]+)(\\?[^\\?]+)?$");
+        Matcher m = p.matcher(path);
+        String fileType = "html";
+        if(m.find()) {
+            fileType = m.group(1);
+        }
+        return fileType;
+    }
+
+    private WebResourceResponse getLoadResponse(WebView view, String path) {
+        WebResourceResponse response = null;
+        String fileType = getPathOfSuffix(path);
+        fileType = fileType.toUpperCase();
+        String contentType = "text/html";
+        if (fileType.equals("CSS")) {
+            contentType = "text/css";
+        } else if(fileType.equals("JS")) {
+            contentType = "application/x-javascript";
+        } else if(fileType.equals("JPG") || fileType.equals("JPEG")) {
+            contentType = "image/jpeg";
+        } else if(fileType.equals("PNG")) {
+            contentType = "image/png";
+        } else if(fileType.equals("GIF")) {
+            contentType = "image/gif";
+        }
+        try {
+            response = new WebResourceResponse(
+                    contentType,
+                    "UTF8",
+                    view.getContext().getAssets().open("www/" + path)
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return response;
     }
