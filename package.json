@@ -10,11 +10,11 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/rockywu/org.wujialei.cordova.localfile.git"
   },
   "keywords": [
     "cordova",
-    "cordova-file-protocol"
+    "localfile"
   ],
   "author": "rockywu",
   "email" : "wjl19890427@hotmail.com",

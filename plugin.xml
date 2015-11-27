@@ -12,10 +12,6 @@
     <repo>https://github.com/rockywu/org.wujialei.cordova.localfile/tree/master</repo>
     <issue>https://github.com/rockywu/org.wujialei.cordova.localfile/issues</issue>
 
-    <js-module src="www/LocalFile.js" name="LocalFile">
-        <clobbers target="LocalFile" />
-    </js-module>
-
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
@@ -26,6 +22,10 @@
         </config-file>
 
         <source-file src="src/android/LocalFilePlugin.java"
+            target-dir="src/org/wujialei/cordova/localfile" />
+        <source-file src="src/android/LocalFileWebChromeClient.java"
+            target-dir="src/org/wujialei/cordova/localfile" />
+        <source-file src="src/android/LocalFileWebViewClient.java"
             target-dir="src/org/wujialei/cordova/localfile" />
     </platform>
 
