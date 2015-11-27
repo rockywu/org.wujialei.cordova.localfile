@@ -23,8 +23,6 @@
 
         <source-file src="src/android/LocalFilePlugin.java"
             target-dir="src/org/wujialei/cordova/localfile" />
-        <source-file src="src/android/LocalFileWebChromeClient.java"
-            target-dir="src/org/wujialei/cordova/localfile" />
         <source-file src="src/android/LocalFileWebViewClient.java"
             target-dir="src/org/wujialei/cordova/localfile" />
     </platform>
