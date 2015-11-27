@@ -1,4 +1,4 @@
-#### 配置运行使用本地静态资源加载
+# 配置运行使用本地静态资源加载
 
 __ 主要目的 __
 
@@ -34,3 +34,7 @@ __ 如何使用 __
   */
  <img src="localfile://img/icon.png">
 ````
+
+### author : rockywu
+### github : http://github.com/rockywu
+### email  : wjl19890427@hotmail.com
