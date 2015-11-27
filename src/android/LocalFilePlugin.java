@@ -9,14 +9,14 @@
 package org.wujialei.cordova.localfile;
 
 import android.content.Context;
+import android.util.Log;
 
-import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.LOG;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
-import org.json.JSONArray;
 
 public class LocalFilePlugin extends CordovaPlugin {
 
@@ -28,6 +28,8 @@ public class LocalFilePlugin extends CordovaPlugin {
 
     private CordovaWebView webView;
 
+    public static final String SCHEME_TAG = "localfile://";
+
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -36,31 +38,10 @@ public class LocalFilePlugin extends CordovaPlugin {
         this.webView = webView;
         SystemWebViewEngine engine = (SystemWebViewEngine)webView.getEngine();
         this.systemWebView = (SystemWebView) webView.getEngine().getView();
-        this.systemWebView.setWebViewClient(new LocalFileWebViewClient(engine));
+        this.systemWebView.setWebViewClient(new LocalFileWebViewClient(engine, this));
     }
 
-    @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-        //   	Log.v("fxapp","action : " + action);
-        // if (action.equals(this.deviceRegister)) {
-        //       	Log.v("fxapp","deviceRegister is Running");
-        //       	if(this.deviceRegister(args)) {
-        //       		Log.v("fxapp",this.deviceRegister + " Status.Ok");
-        //       		callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "deviceRegister is success"));
-        //       	} else {
-        //       		Log.v("fxapp",this.deviceRegister + " Status.Error");
-        //       		callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "city_id is 0 or null"));
-        //       	}
-        //           return false;
-        //       } else if(action.equals(this.networkReload)) {
-        //       	this.networkReload(args);
-        //       	return false;
-        //       } else if(action.equals(this.displayMessage)) {
-        //       	this.displayMessage(args);
-        //       }
-        //       return true;  // Returning false results in a "MethodNotFound" error.
-        return true;
+    public static void log(String msg) {
+        Log.v(LOG_TAG, msg);
     }
-
-
 }

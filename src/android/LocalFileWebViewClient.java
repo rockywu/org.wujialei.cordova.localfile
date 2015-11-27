@@ -2,12 +2,13 @@ package org.wujialei.cordova.localfile;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.util.Log;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
 import org.apache.cordova.engine.SystemWebViewClient;
 import org.apache.cordova.engine.SystemWebViewEngine;
+
+import java.io.IOException;
 
 
 /**
@@ -19,15 +20,38 @@ import org.apache.cordova.engine.SystemWebViewEngine;
  */
 public class LocalFileWebViewClient extends SystemWebViewClient {
 
-    public LocalFileWebViewClient(SystemWebViewEngine parentEngine) {
+    private LocalFilePlugin plugin;
+
+    public LocalFileWebViewClient(SystemWebViewEngine parentEngine, LocalFilePlugin plugin) {
         super(parentEngine);
+        this.plugin = plugin;
     }
 
+    /**
+     * 用于主动拦截 SCHEME_TAG类型的请求
+     * @param view
+     * @param url
+     * @return
+     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-        //基本可以实现localfile拦截
-        Log.v("wujialei", "url : " + url);
-        return super.shouldInterceptRequest(view, url);
+        WebResourceResponse response = super.shouldInterceptRequest(view, url);
+        boolean isLocal = url.contains(LocalFilePlugin.SCHEME_TAG);
+        if(url != null && isLocal) {
+            String assetPath = url.substring(url.indexOf(LocalFilePlugin.SCHEME_TAG) +
+                    LocalFilePlugin.SCHEME_TAG.length(), url.length());
+            try {
+                plugin.log("base : " + assetPath);
+                response = new WebResourceResponse(
+                        "application/javascript",
+                        "UTF8",
+                        view.getContext().getAssets().open("www/" + assetPath)
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return response;
     }
 }
