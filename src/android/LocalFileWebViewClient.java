@@ -59,6 +59,7 @@ public class LocalFileWebViewClient extends SystemWebViewClient {
     }
 
     private WebResourceResponse getLoadResponse(WebView view, String path) {
+        plugin.log("localfile : " + path);
         WebResourceResponse response = null;
         String fileType = getPathOfSuffix(path);
         fileType = fileType.toUpperCase();
