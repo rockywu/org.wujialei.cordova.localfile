@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="org.wujialei.cordova.localfile"
+    version="0.1.0">
+    <name>LocalFilePlugin</name>
+    <description>allow loading local files</description>
+    <license>wujialei isc</license>
+    <keywords>cordova, localfile</keywords>
+    <repo>https://github.com/rockywu/org.wujialei.cordova.localfile/tree/master</repo>
+    <issue>https://github.com/rockywu/org.wujialei.cordova.localfile/issues</issue>
+
+    <js-module src="www/LocalFile.js" name="LocalFile">
+        <clobbers target="LocalFile" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="LocalFile" >
+                <param name="android-package" value="org.wujialei.cordova.localfile" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/LocalFilePlugin.java"
+            target-dir="src/org/wujialei/cordova/localfile" />
+    </platform>
+
+</plugin>
