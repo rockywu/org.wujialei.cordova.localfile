@@ -43,7 +43,12 @@ public class LocalFileWebViewClient extends SystemWebViewClient {
         if(url != null && isLocal) {
             String assetPath = url.substring(url.indexOf(LocalFilePlugin.SCHEME_TAG) +
                     LocalFilePlugin.SCHEME_TAG.length(), url.length());
-            response = getLoadResponse(view, assetPath);
+            WebResourceResponse fileResponse = getLoadResponse(view, assetPath);
+            if(fileResponse != null) {
+                response = fileResponse;
+            } else {
+                plugin.log(url + " is not a local file");
+            }
         }
         return response;
     }
