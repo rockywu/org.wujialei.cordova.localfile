@@ -10,15 +10,18 @@ __ 附带解决 __
 
 www目录下的css,js,img的访问权限
 
+* android (localfile:// 标识代表相对路径 file://android_asset/www/)
+
 __ 支持平台 __
 
 暂时只支持android
 
-__ 如何使用 __
+__ 安装 install __
 
-修改访问地址：
+````
+cordova plugin add https://github.com/rockywu/org.wujialei.cordova.localfile.git
+````
 
-* android (localfile:// 标识代表相对路径 file://android_asset/www/)
 
 ````
 /**
