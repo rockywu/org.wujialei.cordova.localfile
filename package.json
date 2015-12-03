@@ -1,6 +1,6 @@
 {
   "name": "org.wujialei.cordova.localfile",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "cordova wujialei allow local file",
   "cordova": {
     "id": "org.wujialei.cordova.localfile",
