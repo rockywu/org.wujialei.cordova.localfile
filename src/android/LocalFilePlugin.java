@@ -14,7 +14,6 @@ import android.util.Log;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.LOG;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
@@ -30,18 +29,19 @@ public class LocalFilePlugin extends CordovaPlugin {
 
     public static final String SCHEME_TAG = "localfile://";
 
+    public static String getLogTag() {
+        return LOG_TAG;
+    }
+
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
+        Log.v(LOG_TAG, this.getClass() + " initialize");
         // your init code here
         this.mContext = cordova.getActivity();
         this.webView = webView;
         SystemWebViewEngine engine = (SystemWebViewEngine)webView.getEngine();
         this.systemWebView = (SystemWebView) webView.getEngine().getView();
-        this.systemWebView.setWebViewClient(new LocalFileWebViewClient(engine, this));
-    }
-
-    public static void log(String msg) {
-        Log.v(LOG_TAG, msg);
+        this.systemWebView.setWebViewClient(new LocalFileWebViewClient(engine));
     }
 }

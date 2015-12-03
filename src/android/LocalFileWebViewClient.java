@@ -2,6 +2,7 @@ package org.wujialei.cordova.localfile;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.util.Log;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
@@ -22,11 +23,8 @@ import java.util.regex.Pattern;
  */
 public class LocalFileWebViewClient extends SystemWebViewClient {
 
-    private LocalFilePlugin plugin;
-
-    public LocalFileWebViewClient(SystemWebViewEngine parentEngine, LocalFilePlugin plugin) {
+    public LocalFileWebViewClient(SystemWebViewEngine parentEngine) {
         super(parentEngine);
-        this.plugin = plugin;
     }
 
     /**
@@ -47,7 +45,7 @@ public class LocalFileWebViewClient extends SystemWebViewClient {
             if(fileResponse != null) {
                 response = fileResponse;
             } else {
-                plugin.log(url + " is not a local file");
+                Log.v(LocalFilePlugin.getLogTag(), url + " is not a local file");
             }
         }
         return response;
@@ -64,7 +62,7 @@ public class LocalFileWebViewClient extends SystemWebViewClient {
     }
 
     private WebResourceResponse getLoadResponse(WebView view, String path) {
-        plugin.log("localfile : " + path);
+        Log.v(LocalFilePlugin.getLogTag(), "localfile : " + path);
         WebResourceResponse response = null;
         String fileType = getPathOfSuffix(path);
         fileType = fileType.toUpperCase();
